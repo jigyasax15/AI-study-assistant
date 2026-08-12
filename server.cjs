@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
-const { GoogleGenAI } = require('@google/genai')
+const OpenAI = require('openai')
 
 dotenv.config({ path: '.env.local' })
 
@@ -11,8 +11,9 @@ const PORT = 3001
 app.use(cors())
 app.use(express.json())
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+const client = new OpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
 })
 
 app.post('/api/generate', async (req, res) => {
@@ -25,25 +26,38 @@ app.post('/api/generate', async (req, res) => {
       })
     }
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
-      contents: `You are a helpful study assistant.
+    const completion = await client.chat.completions.create({
+      model: 'openrouter/free',
+      messages: [
+        {
+          role: 'system',
+          content:
+            'You are a helpful study assistant. Create clear, student-friendly study material from the notes provided.',
+        },
+        {
+          role: 'user',
+          content: `Analyze these study notes and provide:
 
-Analyze the following study notes and create useful study material.
+# Study Guide
 
-Provide:
+## 1. Short Summary
+Give a concise summary.
 
-1. A short summary
-2. The key concepts
-3. Five practice questions
+## 2. Key Concepts
+List the most important concepts using bullet points.
 
-Use clear headings and keep the explanation student-friendly.
+## 3. Practice Questions
+Create five questions based only on the notes.
+
+Use clear Markdown headings, bullet points, numbered lists, and paragraphs.
 
 Study notes:
 ${notes}`,
+        },
+      ],
     })
 
-    const result = response.text
+    const result = completion.choices[0].message.content
 
     res.json({ result })
   } catch (error) {
