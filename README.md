@@ -1,16 +1,93 @@
-# React + Vite
+# AI Study Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An AI-powered study assistant that transforms study notes into structured and useful study material. Users can enter their notes and receive an AI-generated summary, key concepts, and practice questions.
 
-Currently, two official plugins are available:
+## Project Brief
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The AI Study Assistant is designed for students who want to quickly turn unstructured study notes into organized revision material. The application accepts study notes as input and uses an LLM to generate a short summary, important concepts, and practice questions. I chose this idea because students often have large amounts of notes but may not have enough time to organize them into revision material manually.
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Enter study notes through a simple interface
+- Generate an AI-powered study guide
+- Short summary of the notes
+- Key concepts and important points
+- Five practice questions
+- Student-friendly explanations
+- Loading state while AI content is generated
+- Error handling when the AI request fails
+- Responsive frontend interface
+- API key kept on the backend instead of exposing it in the frontend
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Frontend
+- React
+- Vite
+- CSS
+
+### Backend
+- Node.js
+- Express.js
+- CORS
+- dotenv
+
+### AI Integration
+- OpenRouter API
+- Large Language Model for generating study material
+
+## How It Works
+
+The application consists of two main parts:
+
+```text
+User
+  ↓
+React Frontend
+  ↓
+Express Backend
+  ↓
+OpenRouter API
+  ↓
+AI-generated study material
+  ↓
+React Frontend
+  ↓
+User
+
+
+
+ai-study-assistant/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── .gitignore
+├── index.html
+├── package.json
+├── package-lock.json
+├── server.cjs
+├── vite.config.js
+└── README.md
+
+
+Enter notes
+     ↓
+Click Generate
+     ↓
+Loading state
+     ↓
+Backend receives notes
+     ↓
+OpenRouter generates response
+     ↓
+Study guide displayed
+
+LIVE APPLICATION URL:
+[]
+
+
+
