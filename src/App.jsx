@@ -20,15 +20,18 @@ function App() {
     setLoading(true)
 
     try {
-      const response = await fetch('http://localhost:3001/api/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          notes: notes,
-        }),
-      })
+      const response = await fetch(
+        'https://ai-study-assistant-ge1o.onrender.com/api/generate',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            notes: notes,
+          }),
+        }
+      )
 
       const data = await response.json()
 
