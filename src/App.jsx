@@ -84,6 +84,11 @@ function App() {
           >
             {loading ? 'Generating...' : 'Generate study material'}
           </button>
+          {loading && (
+             <p className="sr-only" role="status" aria-live="polite">
+               Your study material is being generated. Please wait.
+             </p>
+          )}
         </div>
 
         {result && (
