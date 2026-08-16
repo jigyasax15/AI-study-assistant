@@ -1,9 +1,17 @@
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import StudyPreferencesForm from './components/StudyPreferencesForm'
+import {
+  DEFAULT_PREFERENCES,
+  validatePreferences,
+  hasValidationErrors,
+} from './utils/validatePreferences'
 import './App.css'
 
 function App() {
   const [notes, setNotes] = useState('')
+  const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES)
+  const [preferenceErrors, setPreferenceErrors] = useState({})
   const [result, setResult] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -11,6 +19,14 @@ function App() {
   async function handleGenerate() {
     setError('')
     setResult('')
+    setPreferenceErrors({})
+
+    const validationErrors = validatePreferences(preferences)
+
+    if (hasValidationErrors(validationErrors)) {
+      setPreferenceErrors(validationErrors)
+      return
+    }
 
     if (!notes.trim()) {
       setError('Please enter some study notes first.')
@@ -28,7 +44,11 @@ function App() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            notes: notes,
+            notes,
+            preferences: {
+              ...preferences,
+              questionCount: Number(preferences.questionCount),
+            },
           }),
         }
       )
@@ -60,6 +80,12 @@ function App() {
           questions with the help of AI.
         </p>
 
+        <StudyPreferencesForm
+          preferences={preferences}
+          errors={preferenceErrors}
+          onChange={setPreferences}
+        />
+
         <div className="notes-section">
           <label htmlFor="notes">Your study notes</label>
 
@@ -85,9 +111,9 @@ function App() {
             {loading ? 'Generating...' : 'Generate study material'}
           </button>
           {loading && (
-             <p className="sr-only" role="status" aria-live="polite">
-               Your study material is being generated. Please wait.
-             </p>
+            <p className="sr-only" role="status" aria-live="polite">
+              Your study material is being generated. Please wait.
+            </p>
           )}
         </div>
 

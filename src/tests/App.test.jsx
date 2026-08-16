@@ -24,6 +24,29 @@ describe('AI Study Assistant', () => {
     ).toHaveTextContent('Please enter some study notes first.')
   })
 
+  it('shows preference validation errors before generating', async () => {
+    const user = userEvent.setup()
+
+    render(<App />)
+
+    const questionCountInput = screen.getByLabelText(
+      /number of practice questions/i
+    )
+
+    await user.clear(questionCountInput)
+    await user.type(questionCountInput, '0')
+
+    await user.click(
+      screen.getByRole('button', {
+        name: /generate study material/i,
+      })
+    )
+
+    expect(
+      screen.getByText('Question count must be between 1 and 20.')
+    ).toBeInTheDocument()
+  })
+
   it('shows the loading state when notes are submitted', async () => {
     const user = userEvent.setup()
 
