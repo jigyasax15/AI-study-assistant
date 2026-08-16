@@ -1,19 +1,33 @@
 import { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import StudyPreferencesForm from './components/StudyPreferencesForm'
+import {
+  DEFAULT_PREFERENCES,
+  validatePreferences,
+} from './utils/validatePreferences'
 import './App.css'
 
 function App() {
   const [notes, setNotes] = useState('')
+  const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES)
+  const [preferenceErrors, setPreferenceErrors] = useState({})
   const [result, setResult] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   async function handleGenerate() {
     setError('')
+    setPreferenceErrors({})
     setResult('')
 
     if (!notes.trim()) {
       setError('Please enter some study notes first.')
+      return
+    }
+
+    const validation = validatePreferences(preferences)
+    if (!validation.isValid) {
+      setPreferenceErrors(validation.errors)
       return
     }
 
@@ -29,6 +43,7 @@ function App() {
           },
           body: JSON.stringify({
             notes: notes,
+            preferences,
           }),
         }
       )
@@ -59,6 +74,12 @@ function App() {
           Turn your study notes into summaries, key concepts, and practice
           questions with the help of AI.
         </p>
+
+        <StudyPreferencesForm
+          preferences={preferences}
+          onChange={setPreferences}
+          errors={preferenceErrors}
+        />
 
         <div className="notes-section">
           <label htmlFor="notes">Your study notes</label>

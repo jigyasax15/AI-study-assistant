@@ -30,10 +30,89 @@ h1 {
   margin-top: 40px;
 }
 
-.notes-section label {
+.notes-section label,
+.preferences-form label {
   display: block;
   font-weight: 700;
   margin-bottom: 10px;
+}
+
+.preferences-form {
+  margin-top: 32px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.preferences-heading {
+  margin: 0 0 20px;
+  font-size: 1.25rem;
+}
+
+.form-field {
+  margin-bottom: 20px;
+  border: 0;
+  padding: 0;
+}
+
+.form-field legend {
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.radio-label,
+.checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.radio-label input,
+.checkbox-label input {
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.form-field input[type='number'] {
+  display: block;
+  width: 100%;
+  max-width: 120px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  font: inherit;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text-h);
+}
+
+.form-field input[type='number']:focus,
+textarea:focus {
+  outline: 2px solid var(--accent-border);
+  outline-offset: 2px;
+}
+
+.form-field input[aria-invalid='true'],
+textarea[aria-invalid='true'] {
+  border-color: #ef4444;
+}
+
+.form-error {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ef4444;
 }
 
 textarea {
@@ -42,9 +121,11 @@ textarea {
   box-sizing: border-box;
   padding: 16px;
   font: inherit;
-  border: 1px solid #999;
+  border: 1px solid var(--border);
   border-radius: 8px;
   resize: vertical;
+  background: var(--bg);
+  color: var(--text-h);
 }
 
 button {
@@ -64,7 +145,7 @@ button {
 .result {
   margin-top: 40px;
   padding: 24px;
-  border: 1px solid #999;
+  border: 1px solid var(--border);
   border-radius: 12px;
 }
 
