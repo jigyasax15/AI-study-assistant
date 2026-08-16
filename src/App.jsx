@@ -35,7 +35,7 @@ function App() {
 
     try {
       const response = await fetch(
-       'http://localhost:3001/api/generate',
+       'https://ai-study-assistant-ge1o.onrender.com/api/generate',
         {
           method: 'POST',
           headers: {
