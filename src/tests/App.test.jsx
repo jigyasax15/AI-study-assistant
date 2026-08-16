@@ -107,7 +107,7 @@ describe('AI Study Assistant', () => {
     )
 
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://ai-study-assistant-ge1o.onrender.com/api/generate',
+       'http://localhost:3001/api/generate',
       expect.objectContaining({
         method: 'POST',
         body: JSON.stringify({
