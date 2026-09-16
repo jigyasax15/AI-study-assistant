@@ -72,9 +72,14 @@ describe('AI Study Assistant', () => {
 
     expect(
       screen.getByRole('button', {
-        name: /generating/i,
+        name: /^generating\.\.\.$/i,
       })
     ).toBeDisabled()
+    expect(
+      screen.getByRole('button', {
+        name: /^stop generating$/i,
+      })
+    ).toBeEnabled()
   })
 
   it('sends validated preferences with the study notes', async () => {
